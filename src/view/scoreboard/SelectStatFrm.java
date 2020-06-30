@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package view.scoreboard;
-
+import dao.TeamDAO;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import model.Team;
 
 public class SelectStatFrm extends javax.swing.JFrame {
 
@@ -14,10 +17,19 @@ public class SelectStatFrm extends javax.swing.JFrame {
     private int numChampionships;
     
     public SelectStatFrm() {
-        initComponents();
-        
-        cbChampionshipNumber.removeAllItems();
-        
+        initComponents(); 
+        TeamDAO teamDAO = new TeamDAO();
+        Team[] listTeam = teamDAO.getListTeam();
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Team");      
+        for(Team team : listTeam){
+            Vector rows = new Vector(); 
+            rows.add(team.getId());
+            rows.add(team.getName());
+            tableModel.addRow(rows);
+        }
+        tblScoreBoard.setModel(tableModel);
     }
 
     /**
@@ -34,7 +46,7 @@ public class SelectStatFrm extends javax.swing.JFrame {
         btnStat = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblScoreBoard.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -58,8 +70,18 @@ public class SelectStatFrm extends javax.swing.JFrame {
         spScoreVoard.setViewportView(tblScoreBoard);
 
         btnStat.setText("Thống kê");
+        btnStat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatActionPerformed(evt);
+            }
+        });
 
         btnHome.setText("Home");
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,6 +108,15 @@ public class SelectStatFrm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnStatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatActionPerformed
+        new TeamStatFrm().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnStatActionPerformed
 
     /**
      * @param args the command line arguments

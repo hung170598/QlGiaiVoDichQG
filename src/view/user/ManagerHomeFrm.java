@@ -6,6 +6,7 @@
 package view.user;
 
 import model.User;
+import view.scoreboard.SelectStatFrm;
 
 /**
  *
@@ -116,7 +117,7 @@ public class ManagerHomeFrm extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void ChartsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChartsActionPerformed
-        
+        new SelectStatFrm().setVisible(true);
     }//GEN-LAST:event_ChartsActionPerformed
 
     /**
